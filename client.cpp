@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <cstring>
 #include <sys/socket.h>
@@ -34,25 +33,29 @@ int main() {
     std::cout << "Connected to server.\n";
 
     std::string filename;
-    std::cout << "Enter file name to download: ";
+    std::cout << "Enter file name to upload: ";
     std::getline(std::cin, filename);
 
-    send(sock, filename.c_str(), filename.size(), 0);
-
-    std::ofstream out("downloaded_" + filename, std::ios::binary);
-    if (!out) {
-        std::cerr << "Error creating local file.\n";
+    std::ifstream file(filename, std::ios::binary);
+    if (!file) {
+        std::cerr << "Error: Cannot open file '" << filename << "'\n";
+        close(sock);
         return 1;
     }
 
-    ssize_t bytes;
-    while ((bytes = recv(sock, buffer, BUF_SIZE, 0)) > 0) {
-        out.write(buffer, bytes);
+    send(sock, filename.c_str(), filename.size(), 0);
+    usleep(100000); // slight delay to avoid mixing filename and data
+
+    while (!file.eof()) {
+        file.read(buffer, BUF_SIZE);
+        ssize_t bytesRead = file.gcount();
+        if (bytesRead > 0)
+            send(sock, buffer, bytesRead, 0);
     }
 
-    std::cout << "File downloaded successfully as downloaded_" << filename << "\n";
+    std::cout << "File '" << filename << "' uploaded successfully.\n";
 
-    out.close();
+    file.close();
     close(sock);
     return 0;
 }
