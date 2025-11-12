@@ -40,3 +40,5 @@ obj/
 # System junk files
 .DS_Store
 Thumbs.db
+
+downloaded_*
