@@ -1,14 +1,42 @@
-# Ignore user credentials
+# Sensitive or user-specific files
 users.txt
 
-# Ignore build files and executables
-*.o
-*.out
+# Build files and executables
 *.exe
+*.out
+*.o
 server
 client
 
-# Ignore temporary or system files
-*.log
+# Ignore everything inside shared_folder
+shared_folder/*
+
+# Keep only specific files
+!shared_folder/file1.txt
+!shared_folder/file2.txt
+!shared_folder/file3.txt
+
+# Ignore all downloaded and temp files inside shared_folder
+shared_folder/downloaded_*
+shared_folder/UPLOAD
+shared_folder/EXIT
+
+# Temporary and log files
 *.tmp
+*.log
+
+# Editor and IDE settings
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# Build system folders
+build/
+bin/
+obj/
+
+# System junk files
 .DS_Store
+Thumbs.db
