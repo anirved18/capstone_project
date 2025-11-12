@@ -1,4 +1,14 @@
-# Ignore compiled binaries
-client
-server
+# Ignore user credentials
+users.txt
+
+# Ignore build files and executables
 *.o
+*.out
+*.exe
+server
+client
+
+# Ignore temporary or system files
+*.log
+*.tmp
+.DS_Store
